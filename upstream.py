@@ -2,14 +2,14 @@ import requests;
 import re;
 import utils;
 import jsunpack;
-import jsbeautifier.unpackers.packer as packer;
 
 
 
 def getEval(url):
     with requests.Session() as s:
         response = s.get(url);
-        return re.findall('eval.*',response.text)[0];
+        encontrado = re.findall('<script type[=]\'text\/javascript\'>eval.*',response.text)[0];
+        return encontrado;
 
 
 def unpack(eval):
@@ -18,8 +18,7 @@ def unpack(eval):
 
 
 
-def downloadFile(url, filename):
-    print(filename);
+def downloadFile(url, filename, autoUploadToMixdrop):
     jsunpacked = unpack(getEval(url));
     url = str(re.findall('file:".*"}],image', jsunpacked)[0]).replace('file:"', '').replace('"}],image','');
     if not url.__contains__("https://"):
@@ -30,4 +29,4 @@ def downloadFile(url, filename):
         else: 
             server = servers.split("=")[1];
         url="https://"+server+".upstreamcdn.co"+url
-    utils.downloadFile(url, filename);
+    utils.downloadFile(url, filename, autoUploadToMixdrop);

@@ -1,15 +1,24 @@
 
-import jsbeautifier.unpackers.packer as packer
 import upstream
+import vtube
 from _thread import start_new_thread
 from tkinter import filedialog
 
 filetypes = [('Archivos CSV', '*.csv')];
+autoUploadToMixdrop = True;
+
+
+
 
 while True:
+    if autoUploadToMixdrop:
+        autoUploadToMixdropTXT = "activado";
+    else:
+        autoUploadToMixdropTXT = "desactivado"
     print("""
 1. Introducir url y nombre de archivo
 2. Seleccionar csv (Delimitador por defecto ";" )
+3. Subir automáticamente a mixdrop ("""+autoUploadToMixdropTXT+""")
 99. Salir
     """);
     opcion = input(": ");
@@ -19,10 +28,13 @@ while True:
         print("""
 Proveedor:
   1. upstream
+  2. vtube
         """);
         proveedor = input(": ");
         if proveedor.strip() == "1":
-            start_new_thread(upstream.downloadFile, (url, filename,))
+            start_new_thread(upstream.downloadFile, (url, filename,autoUploadToMixdrop))
+        if proveedor.strip() == "2":
+            start_new_thread(vtube.downloadFile, (url.replace(".html", "").replace("embed-", ""), filename,autoUploadToMixdrop))
     elif opcion == "2":
         files = filedialog.askopenfiles(filetypes=filetypes, defaultextension=filetypes, title="Abrir csv para descargar");
         for f in files:
@@ -33,8 +45,12 @@ Proveedor:
                     proveedor = line.split(";")[1].strip();
                     nombre = line.split(";")[2].strip();
                     if proveedor == "upstream":
-                        start_new_thread(upstream.downloadFile, (url, nombre,))
+                        start_new_thread(upstream.downloadFile, (url, nombre,autoUploadToMixdrop))
+                    if proveedor == "vtube":
+                        start_new_thread(vtube.downloadFile, (url, nombre,autoUploadToMixdrop))
                 inp.close();
             f.close();
+    elif opcion == "3":
+        autoUploadToMixdrop = not autoUploadToMixdrop;
     elif opcion == "99":
         exit();
