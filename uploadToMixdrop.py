@@ -4,8 +4,8 @@ import asyncio
 import aiohttp
 
 upload_url = "https://ul.mixdrop.co/api"
-email = "watchmagic.in@gmail.com"
-key = "GFwQPZ8TsMI1lz0ykk"
+email = ""
+key = ""
 
 async def upload(path:str):
   async with aiohttp.ClientSession() as session:

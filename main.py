@@ -5,7 +5,7 @@ from _thread import start_new_thread
 from tkinter import filedialog
 
 filetypes = [('Archivos CSV', '*.csv')];
-autoUploadToMixdrop = True;
+autoUploadToMixdrop = False;
 
 
 
@@ -16,17 +16,17 @@ while True:
     else:
         autoUploadToMixdropTXT = "desactivado"
     print("""
-1. Introducir url y nombre de archivo
-2. Seleccionar csv (Delimitador por defecto ";" )
-3. Subir automáticamente a mixdrop ("""+autoUploadToMixdropTXT+""")
-99. Salir
+1. Descargar por URL"""+
+# 2. Seleccionar csv (Delimitador por defecto ";" )"""+
+# 3. Subir automáticamente a mixdrop ("""+autoUploadToMixdropTXT+""")
+"""99. Salir
     """);
     opcion = input(": ");
     if opcion.strip() == "1":
         url = input("URL: ");
         filename = input("Nombre: ");
         print("""
-Proveedor:
+Origen del vídeo:
   1. upstream
   2. vtube
         """);
