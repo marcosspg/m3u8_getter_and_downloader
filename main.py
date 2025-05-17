@@ -19,7 +19,8 @@ while True:
 1. Descargar por URL"""+
 # 2. Seleccionar csv (Delimitador por defecto ";" )"""+
 # 3. Subir automáticamente a mixdrop ("""+autoUploadToMixdropTXT+""")
-"""99. Salir
+"""
+99. Salir
     """);
     opcion = input(": ");
     if opcion.strip() == "1":
